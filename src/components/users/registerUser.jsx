@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const RegisterUser = ({agregarUser}) => {
+const RegisterUser = ({addUser}) => {
     const initialState = {
         name: '',
         description: '',
@@ -43,7 +43,7 @@ const RegisterUser = ({agregarUser}) => {
             icon: 'success',
         });
         
-        agregarUser({
+        addUser({
             name : name,
             description: description,
             tipoPlayer: tipoPlayer === 'recluta' ? false : true,

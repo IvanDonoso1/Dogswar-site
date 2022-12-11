@@ -5,14 +5,14 @@ const UserList = () => {
 
     const [users, setUsers] = useState([]);
 
-    const agregarUser = (user) => {
+    const addUser = (user) => {
         console.log(user);
         setUsers((old) => [...old, user]);
     }
 
     return (
         <>
-            <RegisterUser agregarUser={agregarUser} />
+            <RegisterUser addUser={addUser} />
         </>
     )
 }
