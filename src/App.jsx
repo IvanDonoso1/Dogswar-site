@@ -4,11 +4,11 @@ import WelcomeText from "./components/welcomeText";
 import ListFruts from "./components/fruts/listFruts";
 import ButtonState from "./components/buttonState";
 import Register from "./components/form/register";
-import RegisterUser from "./components/form/registerUser";
+import RegisterUser from "./components/users/registerUser";
 
 const App = () => {
 
-  const title = "Hola soy react";
+  const title = "Registrate";
   const user = false;
   const fruts = ['frutilla', 'banana', 'palta'];
 
@@ -17,14 +17,11 @@ const App = () => {
     <>
     <div className="container p-2">
 
-      <ButtonState/>
+      {/* <ButtonState/> */}
       <h1 className="text-center">{title.toUpperCase()}</h1>
-      <MyButton text="boton1" />
-      <MyButton text="boton2" />
-      <MyButton text="boton3" />
+      {/* <MyButton text="boton1" />
       <WelcomeText user={user} />
-      <ListFruts fruts={fruts}/>
-      <MyButton text="Registrate !" />
+      <ListFruts fruts={fruts}/> */}
       {/* <Register/> */}
       <RegisterUser/>
     </div>

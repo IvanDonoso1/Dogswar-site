@@ -1,33 +1,66 @@
 import React, { useState } from 'react'
-import Alert from '../alert/alert';
+import Swal from 'sweetalert2';
+import { v4 as uuidv4 } from 'uuid';
 
-const RegisterUser = () => {
 
-    const [todo, setTodo] = useState({
-        todoName: '',
+
+const RegisterUser = ({agregarUser}) => {
+    const initialState = {
+        name: '',
         description: '',
         tipoPlayer: 'recluta',
         mayorEdad: false
-    });
-    const [error, setError] = useState(false);
+    }
+
+    const [user, setUser] = useState(initialState);
+
+    const {name, description, tipoPlayer, mayorEdad } = user;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const {todoName, description} = todo
-        if ( !description.trim() || !todoName.trim()){
-            setError(true)
-            console.log("nooooooooooooooo, esta vacia ")
+        if ( !name.trim()){
+            e.target[0].focus();
+            Swal.fire({
+                title: 'Error!',
+                text: 'Debe ingresar un nombre valido',
+                icon: 'error',
+            })
             return
         }
-        setError(false)
-    }
+        if ( !description.trim()){
+            e.target[1].focus();
+            Swal.fire({
+                title: 'Error!',
+                text: 'Debe ingresar una descripcion valida',
+                icon: 'error',
+            })
+            return
+        };
 
+        Swal.fire({
+            title: 'Exito !',
+            text: 'Tarea agregada',
+            icon: 'success',
+        });
+        
+        agregarUser({
+            name : name,
+            description: description,
+            tipoPlayer: tipoPlayer === 'recluta' ? false : true,
+            mayorEdad: mayorEdad,
+            id: uuidv4()
+        });
+        console.log(user)
+        
+        setUser(initialState);
+        
+    };
+    
     const handleChange = e => {
         // console.log(e.target.value);
         // console.log(e.target.name);
         const {name, type, checked, value} = e.target
-        setTodo({...todo, [name]: type === "checkbox" ? checked :value})
+        setUser((old) => ({...old, [name]: type === "checkbox" ? checked :value}))
     }
 
 
@@ -35,30 +68,27 @@ const RegisterUser = () => {
     return (
         <>
             <div className='container p-2'>
-                {
-                    error ? <Alert text='Campos obligatorios, bebe'/> : null
-                }
                 <form onSubmit={handleSubmit}>
                     <input
-                        name='todoName'
-                        placeholder='Ingrese Todoname'
+                        name='name'
+                        placeholder='Ingrese nombre'
                         type='text'
                         className='form-control mb-2'
                         onChange={handleChange}
-                        value={todo.todoName}
+                        value={name}
                     />
                     <textarea
                         name='description'
                         placeholder='Descripcion'
                         className='form-control mb-2'
                         onChange={handleChange}
-                        value={todo.description}
+                        value={description}
                     />
                     <select
                         name='tipoPlayer'
                         className='form-control mb-2'
                         onChange={handleChange}
-                        value={todo.tipoPlayer}
+                        value={tipoPlayer}
                     >
                         <option value='miembro'>miembro</option>
                         <option value='recluta'>recluta</option>
@@ -69,7 +99,7 @@ const RegisterUser = () => {
                             type="checkbox"
                             id="flexCheckDefault"
                             name='mayorEdad'
-                            checked={todo.mayorEdad}
+                            checked={mayorEdad}
                             onChange={handleChange}
                         />
                         <label
@@ -85,4 +115,4 @@ const RegisterUser = () => {
     )
 }
 
-export default RegisterUser
+export default RegisterUser;
